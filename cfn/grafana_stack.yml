@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS Managed Grafana workspace with CloudWatch integration'
+
+Parameters:
+  # Customize these parameters when creating the CloudFormation stack
+  WorkspaceName:
+    Type: String
+    Default: 'CloudWatchMetricsMonitoringWorkspace'
+    Description: 'Name of the Grafana workspace'
+
+  WorkspaceDescription:
+    Type: String
+    Default: 'Grafana workspace for monitoring CloudWatch metrics'
+    Description: 'Description of the Grafana workspace'
+
+  AuthenticationProvider:
+    Type: String
+    Default: 'AWS_SSO'
+    AllowedValues:
+      - 'AWS_SSO'
+      - 'SAML'
+    Description: 'Authentication provider for the Grafana workspace'
+
+  PermissionType:
+    Type: String
+    Default: 'SERVICE_MANAGED'
+    AllowedValues:
+      - 'SERVICE_MANAGED'
+      - 'CUSTOMER_MANAGED'
+    Description: 'Permission type for the Grafana workspace'
+
+  AccountAccessType:
+    Type: String
+    Default: 'CURRENT_ACCOUNT'
+    AllowedValues:
+      - 'CURRENT_ACCOUNT'
+      - 'ORGANIZATION'
+    Description: 'Account access type for the Grafana workspace'
+
+Resources:
+  # IAM role for Grafana to access CloudWatch
+  GrafanaWorkspaceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: grafana.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: GrafanaCloudWatchAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # Permissions to read CloudWatch metrics
+              - Effect: Allow
+                Action:
+                  - 'cloudwatch:DescribeAlarmsForMetric'
+                  - 'cloudwatch:DescribeAlarmHistory'
+                  - 'cloudwatch:DescribeAlarms'
+                  - 'cloudwatch:ListMetrics'
+                  - 'cloudwatch:GetMetricStatistics'
+                  - 'cloudwatch:GetMetricData'
+                Resource: '*'
+
+  # AWS Managed Grafana workspace
+  GrafanaWorkspace:
+    Type: 'AWS::Grafana::Workspace'
+    Properties:
+      AccountAccessType: !Ref AccountAccessType
+      AuthenticationProviders: 
+        - !Ref AuthenticationProvider
+      PermissionType: !Ref PermissionType
+      DataSources: 
+        - CLOUDWATCH  # Enables CloudWatch as a data source
+      Name: !Ref WorkspaceName
+      Description: !Ref WorkspaceDescription
+      RoleArn: !GetAtt GrafanaWorkspaceRole.Arn  # Attaches the IAM role to the workspace
+
+Outputs:
+  # Useful information about the created resources
+  GrafanaWorkspaceId:
+    Description: 'The ID of the Grafana workspace'
+    Value: !Ref GrafanaWorkspace
+  GrafanaWorkspaceUrl:
+    Description: 'The URL of the Grafana workspace'
+    Value: !GetAtt GrafanaWorkspace.Endpoint
