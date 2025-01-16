@@ -1,0 +1,4121 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 30,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": true,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 14,
+        "panels": [
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 7,
+              "x": 0,
+              "y": 1
+            },
+            "id": 2,
+            "options": {
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showThresholdLabels": false,
+              "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "(m1-m2)/PERIOD(m1)*$period",
+                "hide": false,
+                "id": "m3",
+                "label": "AvailablePrimaryStorageCapacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Available primary storage capacity",
+            "type": "gauge"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "Bps"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "TotalClientThroughput"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 7,
+              "w": 9,
+              "x": 7,
+              "y": 1
+            },
+            "id": 4,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadBytes",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteBytes",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "SUM(METRICS())/PERIOD(m1)",
+                "hide": false,
+                "id": "m3",
+                "label": "TotalClientThroughput",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Total client throughput (bytes/sec)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "Bps"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "TotalClientIOPS"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 7,
+              "w": 8,
+              "x": 16,
+              "y": 1
+            },
+            "id": 6,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "SUM(METRICS())/PERIOD(m1)",
+                "hide": false,
+                "id": "m4",
+                "label": "TotalClientIOPS",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "default",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Total client IOPS (operations/sec)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  }
+                },
+                "mappings": [],
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Capacity pool tier",
+                        "Primary tier - used",
+                        "Primary tier - available"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 5,
+              "w": 7,
+              "x": 0,
+              "y": 5
+            },
+            "id": 10,
+            "options": {
+              "displayLabels": [
+                "percent"
+              ],
+              "legend": {
+                "displayMode": "list",
+                "placement": "right",
+                "showLegend": true,
+                "values": []
+              },
+              "pieType": "donut",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "StorageCapacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "StandardCapacityPool"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "Capacity pool tier",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "Primary tier - used",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "(m1-m3)",
+                "hide": false,
+                "id": "m4",
+                "label": "Primary tier - available",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "us-east-2",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Storage distribution",
+            "type": "piechart"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "ms"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Read operations",
+                        "Write operations",
+                        "Metadata operations"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 17,
+              "x": 7,
+              "y": 8
+            },
+            "id": 8,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m4",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m5",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "E",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m6",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "F",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m2/(m1+0.000001)",
+                "hide": false,
+                "id": "m7",
+                "label": "Write operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "G",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m4/(m3+0.000001)",
+                "hide": false,
+                "id": "m8",
+                "label": "Read operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "H",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m6/(m5+0.000001)",
+                "hide": false,
+                "id": "m9",
+                "label": "Metadata operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "I",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Average latency (ms/operation)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Space savings (%)"
+                  },
+                  "properties": [
+                    {
+                      "id": "unit",
+                      "value": "percent"
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 7,
+              "x": 0,
+              "y": 10
+            },
+            "id": 12,
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageEfficiencySavings",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "m1",
+                "hide": false,
+                "id": "m3",
+                "label": "Space savings",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "100*(m1/(m1+m2))",
+                "hide": false,
+                "id": "m4",
+                "label": "Space savings (%)",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Storage efficiency savings",
+            "type": "stat"
+          }
+        ],
+        "title": "FSxONTAP - FileSystem - Summary",
+        "type": "row"
+      },
+      {
+        "collapsed": true,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 16,
+        "panels": [
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Available primary storage capacity (bytes)"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 2
+            },
+            "id": 18,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "(m1-m2)/PERIOD(m1)*$period",
+                "hide": false,
+                "id": "",
+                "label": "Available primary storage capacity (bytes)",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Available primary storage capacity (bytes)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "percent"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Primary storage capacity utilization"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 2
+            },
+            "id": 20,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "100 * m1/(m2+0.000001)",
+                "hide": false,
+                "id": "",
+                "label": "Primary storage capacity utilization",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Primary storage capacity utilization (percent)",
+            "type": "timeseries"
+          }
+        ],
+        "title": "FSxONTAP - FileSystem - Storage",
+        "type": "row"
+      },
+      {
+        "collapsed": true,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 2
+        },
+        "id": 22,
+        "panels": [
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 10,
+              "x": 0,
+              "y": 3
+            },
+            "id": 28,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FileServerDiskThroughputBalance",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "300",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Disk throughput - burst balance (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "continuous-GrYlRd"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "scheme",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 3,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 10,
+              "y": 3
+            },
+            "id": 36,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FileServerCacheHitRatio",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "60",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Cache hit ratio (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 7,
+              "w": 10,
+              "x": 0,
+              "y": 11
+            },
+            "id": 34,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "CPUUtilization",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "CPU utilization (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "7z54bHiSz"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 10,
+              "y": 11
+            },
+            "id": 26,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "7z54bHiSz"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FileServerDiskThroughputUtilization",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Disk throughput - utilization (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "continuous-GrYlRd",
+                  "seriesBy": "last"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "scheme",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 3,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 10,
+              "x": 0,
+              "y": 18
+            },
+            "id": 32,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FileServerDiskIopsBalance",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "300",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Disk IOPS - burst balance (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 10,
+              "y": 19
+            },
+            "id": 30,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FileServerDiskIopsUtilization",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Disk IOPS - utilization (percent)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "NetworkThroughputUtilization"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 10,
+              "x": 0,
+              "y": 26
+            },
+            "id": 24,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid"
+                },
+                "expression": "",
+                "id": "",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "NetworkThroughputUtilization",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Network throughput - utilization (percent)",
+            "type": "timeseries"
+          }
+        ],
+        "title": "FSxONTAP - FileSystem - Performance",
+        "type": "row"
+      },
+      {
+        "collapsed": true,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 3
+        },
+        "id": 52,
+        "panels": [
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Available storage capacity"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 6
+            },
+            "id": 38,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "All SSD StorageCapacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m4",
+                "label": "All SSD StorageCapacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "MIN([m1-m2, m3-m4])/PERIOD(m1)*$period",
+                "hide": false,
+                "id": "m5",
+                "label": "Available storage capacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "E",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Available storage capacity",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 6
+            },
+            "id": 40,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadBytes",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteBytes",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "SUM(METRICS())/PERIOD(m1)",
+                "hide": false,
+                "id": "m3",
+                "label": "Total client throughput",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "AWS/EFS",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Total client throughput (bytes/sec)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  }
+                },
+                "mappings": [],
+                "unit": "decbytes"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 14
+            },
+            "id": 50,
+            "options": {
+              "displayLabels": [
+                "percent"
+              ],
+              "legend": {
+                "displayMode": "list",
+                "placement": "right",
+                "showLegend": true,
+                "values": []
+              },
+              "pieType": "donut",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": true,
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": true,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": true,
+                "id": "m3",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "All",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "SSD"
+                },
+                "expression": "",
+                "hide": true,
+                "id": "m4",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "Other",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "All",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m5",
+                "label": "Other data",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "E",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "Snapshot",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "All",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m6",
+                "label": "Snapshot data",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "F",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "DataType": "User",
+                  "FileSystemId": "$filesystemid",
+                  "StorageTier": "All",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m7",
+                "label": "User data",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "StorageUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "G",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "MIN([m1-m2, m3-m4])/PERIOD(m1)*60",
+                "hide": false,
+                "id": "m8",
+                "label": "Available volume capacity",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "H",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Storage distribution",
+            "type": "piechart"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Total client IOPS"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 14
+            },
+            "id": 42,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "SUM(METRICS())/PERIOD(m1)",
+                "hide": false,
+                "id": "m4",
+                "label": "Total client IOPS",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Total client IOPS (operations/sec)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Available files (inodes)"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 22
+            },
+            "id": 48,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FilesCapacity",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "FilesUsed",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "(m1-m2)/PERIOD(m1)*60",
+                "hide": false,
+                "id": "m3",
+                "label": "Available files (inodes)",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Available files (inodes)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Metadata operations",
+                        "Read operations",
+                        "Write operations"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 22
+            },
+            "id": 46,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataWriteOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m3",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m4",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DataReadOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m5",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "E",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m6",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "MetadataOperationTime",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "F",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m2/(m1+0.000001)",
+                "hide": false,
+                "id": "m7",
+                "label": "Write operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "G",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m4/(m3+0.000001)",
+                "hide": false,
+                "id": "m8",
+                "label": "Read operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "H",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "1000 * m6/(m5+0.000001)",
+                "hide": false,
+                "id": "m9",
+                "label": "Metadata operations",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "I",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Average latency (ms/operation)",
+            "type": "timeseries"
+          },
+          {
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": [
+                {
+                  "__systemRef": "hideSeriesFrom",
+                  "matcher": {
+                    "id": "byNames",
+                    "options": {
+                      "mode": "exclude",
+                      "names": [
+                        "Capacity Pool Read Operations (operations/sec)",
+                        "Capacity Pool Write Operations (operations/sec)"
+                      ],
+                      "prefix": "All except:",
+                      "readOnly": true
+                    }
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.hideFrom",
+                      "value": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 30
+            },
+            "id": 44,
+            "options": {
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "mode": "single",
+                "sort": "none"
+              }
+            },
+            "targets": [
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "id": "m1",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "CapacityPoolReadOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {
+                  "FileSystemId": "$filesystemid",
+                  "VolumeId": "$volumeid"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "m2",
+                "label": "",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "CapacityPoolWriteOperations",
+                "metricQueryType": 0,
+                "namespace": "AWS/FSx",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Sum"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "m1/PERIOD(m1)",
+                "hide": false,
+                "id": "m3",
+                "label": "Capacity Pool Read Operations (operations/sec)",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "C",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "${datasource}"
+                },
+                "dimensions": {},
+                "expression": "m2/PERIOD(m2)",
+                "hide": false,
+                "id": "m4",
+                "label": "Capacity Pool Write Operations (operations/sec)",
+                "logGroups": [],
+                "matchExact": true,
+                "metricEditorMode": 1,
+                "metricName": "",
+                "metricQueryType": 0,
+                "namespace": "",
+                "period": "$period",
+                "queryMode": "Metrics",
+                "refId": "D",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "title": "Capacity Pool IOPS (operations/sec)",
+            "type": "timeseries"
+          }
+        ],
+        "title": "FSxONTAP - FileSystem - Volume",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "m2qljzkSk"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 4
+        },
+        "id": 56,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "For more information, see [Amazon CloudWatch Metrics for Amazon FSx ONTAP](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/monitoring-cloudwatch.html).",
+          "mode": "markdown"
+        },
+        "pluginVersion": "9.4.7",
+        "title": "Info",
+        "type": "text"
+      }
+    ],
+    "refresh": "",
+    "revision": 1,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [
+      "AWS",
+      "CloudWatch",
+      "FSxn",
+      "Ontap"
+    ],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "AmazonMSK-CloudWatch",
+            "value": "AmazonMSK-CloudWatch"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Data source",
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "query": "cloudwatch",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "type": "datasource"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "us-east-2",
+            "value": "us-east-2"
+          },
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Region",
+          "multi": false,
+          "name": "region",
+          "options": [],
+          "query": {
+            "queryType": "regions",
+            "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+            "region": "default"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "fs-065d6f8749da7b535",
+            "value": "fs-065d6f8749da7b535"
+          },
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "FileSystemId",
+          "multi": false,
+          "name": "filesystemid",
+          "options": [],
+          "query": {
+            "dimensionKey": "FileSystemId",
+            "metricName": "DataReadOperations",
+            "namespace": "AWS/FSx",
+            "queryType": "dimensionValues",
+            "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+            "region": "$region"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "fsvol-0e17b45cab52e2af8",
+            "value": "fsvol-0e17b45cab52e2af8"
+          },
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "VolumeId",
+          "multi": false,
+          "name": "volumeid",
+          "options": [],
+          "query": {
+            "dimensionFilters": {},
+            "dimensionKey": "VolumeId",
+            "metricName": "DataReadBytes",
+            "namespace": "AWS/FSx",
+            "queryType": "dimensionValues",
+            "refId": "CloudWatchVariableQueryEditor-VariableQuery",
+            "region": "$region"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "60",
+            "value": "60"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Period [sec]",
+          "multi": false,
+          "name": "period",
+          "options": [
+            {
+              "selected": true,
+              "text": "60",
+              "value": "60"
+            },
+            {
+              "selected": false,
+              "text": "300",
+              "value": "300"
+            },
+            {
+              "selected": false,
+              "text": "3600",
+              "value": "3600"
+            }
+          ],
+          "query": "60,300,3600",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-3h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "AWS FSx - FSxn-CloudWatch",
+    "uid": "",
+    "version": 2,
+    "weekStart": ""
+  }
