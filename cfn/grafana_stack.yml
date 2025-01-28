@@ -63,6 +63,12 @@ Resources:
                   - 'cloudwatch:ListMetrics'
                   - 'cloudwatch:GetMetricStatistics'
                   - 'cloudwatch:GetMetricData'
+                  - 'logs:DescribeLogGroups'
+                  - 'logs:GetLogGroupFields'
+                  - 'logs:StartQuery'
+                  - 'logs:StopQuery'
+                  - 'logs:GetQueryResults'
+                  - 'logs:GetLogEvents'
                 Resource: '*'
 
   # AWS Managed Grafana workspace
